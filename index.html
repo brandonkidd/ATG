@@ -1276,54 +1276,6 @@ nav.scrolled .mobile-toggle span { background: #fff; }
   font-size: 15px;
   color: var(--warm-gray);
 }
-
-/* CTA Perks Row */
-.cta-perks-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  max-width: 640px;
-  margin: 0 auto 48px;
-}
-.cta-perk-card {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  background: #fff;
-  padding: 24px;
-  border-radius: 8px;
-  border: 1px solid var(--cream-dark);
-}
-.cta-perk-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.cta-perk-icon.blue {
-  background: rgba(27,58,122,0.08);
-  color: var(--blue);
-}
-.cta-perk-icon.red {
-  background: rgba(196,58,58,0.08);
-  color: var(--red);
-}
-.cta-perk-text h4 {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--blue-deep);
-  margin-bottom: 4px;
-}
-.cta-perk-text p {
-  font-size: 14px;
-  color: var(--warm-gray);
-  line-height: 1.5;
-}
-
 .contact-form-card {
   background: #fff;
   padding: 48px;
@@ -1577,7 +1529,6 @@ footer {
 
   .pricing-features { grid-template-columns: 1fr; }
   .pricing-card-body { padding: 32px 24px; }
-  .cta-perks-row { grid-template-columns: 1fr; }
   .email-form { flex-direction: column; }
   .contact-grid { grid-template-columns: 1fr; }
   .contact-form-card { padding: 32px 24px; }
@@ -1962,7 +1913,7 @@ footer {
           </div>
         </div>
       </div>
-      <div class="contact-form-card" style="max-width:640px;margin:0 auto;">
+      <div class="contact-form-card fade-up" style="max-width:640px;margin:0 auto;">
         <form onsubmit="event.preventDefault()">
           <div class="form-row">
             <div class="form-group">
@@ -2065,7 +2016,11 @@ footer {
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  
+// Fade-up animation observer
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
@@ -2078,6 +2033,13 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Fallback: make all elements visible after 2 seconds if they haven't animated yet
+setTimeout(() => {
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => {
+    el.classList.add('visible');
+  });
+}, 2000);
 
 // Nav: light on hero, dark on cream sections
 const navEl = document.getElementById('navbar');
@@ -2112,4 +2074,5 @@ function toggleFaq(item) {
   if (!wasActive) item.classList.add('active');
 }
 
-/
+}); // End DOMContentLoaded
+</script>
